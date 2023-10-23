@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
-import { Book, ReceiptSquare, Clock, Message } from 'iconsax-react-native';
+import { Book, ReceiptSquare, SearchNormal1, Like, Document, Notification, ProfileCircle, Book1 } from 'iconsax-react-native';
 import { fontType, colors } from './src/theme';
 import { dongeng1, dongeng2, dongeng3, dongeng4 } from './src/assets/images';
 
@@ -8,42 +8,40 @@ import { dongeng1, dongeng2, dongeng3, dongeng4 } from './src/assets/images';
 export default function App() {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Nusantara Saga</Text>
-        <Book size={28} color={colors.bluec(1)} />
-      </View>
-      <View style={content1.container}>
-        <Text style={content1.title}>Hello Mindaha!</Text>
-        <Text style={content1.subtitle}>Which books suits your current mood?</Text>
-        <View style={styles.listCategory}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View style={{ ...category.item, marginLeft: 5 }}>
-              <Text style={{ ...category.title, color: colors.bluec() }}>
-                Popular
-              </Text>
-            </View>
-            <View style={category.item}>
-              <Text style={category.title}>Urban Legends</Text>
-            </View>
-            <View style={category.item}>
-              <Text style={category.title}>Mythological</Text>
-            </View>
-            <View style={category.item}>
-              <Text style={category.title}>Maritime </Text>
-            </View>
-            <View style={{ ...category.item, marginRight: 24 }}>
-              <Text style={category.title}>Classic Folktales</Text>
-            </View>
-          </ScrollView>
+      <View style={styles.box}>
+        <View style={styles.itemAndIconContainer}>
+          <Text style={[styles.title, { color: colors.white(1) }]}>Let's Read Something!</Text>
+          <Book size={23} color={colors.white(1)} />
         </View>
-        <View style={content1.item}></View>
-        <View style={content1.box}>
-          <Text style={content1.subtitle}>Remember, Mindaha. You have an unfinished book since September 29, 2023
-          </Text>
+        <View style={styles.itemAndIconContainer}>
+          <View style={styles.boxsearch}>
+            <SearchNormal1 size={10} color={colors.white(1)} />
+            <Text style={[styles.teks, { color: colors.white(1) }]}>  Search...</Text>
+          </View>
+          <Like size={23} color={colors.white(1)} />
+          <Document size={23} color={colors.white(1)} />
+          <Notification size={23} color={colors.white(1)} />
         </View>
-        <Text style={content1.title1}>Recomendation</Text>
       </View>
-      <ListBook />
+      <View style={styles.box2}>
+        <View style={styles.box3}>
+          <Text style={[styles.teks1, { color: colors.blue(1) }]}> Ebook </Text>
+        </View>
+        <Text style={[styles.teks1, { color: colors.grey(1) }]}>           Comic </Text>
+      </View>
+      <View style={[styles.content]}>
+        <View style={styles.itemAndIconContainer}>
+          <Text style={[styles.title, { color: colors.black(1) }]}>Recent Readings!</Text>
+          <Text style={[styles.title, { color: colors.blue(1) }]}>View All</Text>
+        </View>
+        <ListBook />
+        <View style={[styles.horizontalLine, { opacity: 0.2 }]}></View>
+        <View style={styles.itemAndIconContainer}>
+          <Text style={[styles.title, { color: colors.black(1) }]}>Categories</Text>
+          <Text style={[styles.title, { color: colors.blue(1) }]}>Sort by: Popularity</Text>
+        </View>
+        <ListCategories />
+      </View>
     </View>
   );
 }
@@ -53,99 +51,94 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white(),
   },
-  header: {
+  title: {
+    fontSize: 15,
+    fontFamily: fontType['Ppn-Bold'],
+  },
+  content: {
+    paddingTop: 25,
+    paddingBottom: 30,
     paddingHorizontal: 24,
     justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 55,
-    elevation: 8,
-    paddingTop: 8,
-    paddingBottom: 4,
-    backgroundColor: colors.white(), // Atur latar belakang menjadi putih
-    padding: 10,
-    borderRadius: 5,
+    flexDirection: 'coloumn',
   },
-  title: {
-    fontSize: 20,
-    fontFamily: fontType['Ppn-ExtraBold'],
-    color: colors.bluec(1),
-  },
-});
 
-const content1 = StyleSheet.create({
-  container: {
-    paddingHorizontal: 24,
+  itemAndIconContainer: {
+    flexDirection: 'row', // Mengatur teks dan ikon dalam satu baris
     justifyContent: 'space-between',
-    paddingTop: 30,
-    paddingBottom: 20,
-    backgroundColor: colors.cream(0.1),
-  },
-
-  item: {
-    margin: 10,
-  },
-
-  title: {
-    fontFamily: fontType['Ppn-SemiBold'],
-    fontSize: 28,
-    lineHeight: 35,
-    color: colors.bluec(1),
-  },
-  subtitle: {
-    fontFamily: fontType['Ppn-Regular'],
-    fontSize: 15,
-    lineHeight: 25,
-    color: colors.black(1),
-  },
-  subtitle: {
-    fontFamily: fontType['Ppn-Regular'],
-    fontSize: 15,
-    lineHeight: 25,
-    paddingBottom: 20,
-    color: colors.black(1),
-  },
-  title1: {
-    fontFamily: fontType['Ppn-SemiBold'],
-    fontSize: 15,
-    lineHeight: 25,
-    paddingTop: 20,
-    color: colors.bluec(1),
   },
   box: {
-    paddingHorizontal: 24,
-    paddingTop: 15,
+    width: 395,
+    height: 140,
+    backgroundColor: colors.blue(1),
     borderRadius: 10,
-    width: 370,
-    height: 150,
-    backgroundColor: colors.white(0.7),
+    elevation: 9,
+    paddingTop: 45,
+    paddingBottom: 30,
+    paddingHorizontal: 24,
+    justifyContent: 'space-between',
+    flexDirection: 'coloumn',
   },
-})
-
-const category = StyleSheet.create({
-  item: {
+  boxsearch: {
+    width: 200,
+    height: 30,
+    backgroundColor: colors.white(0.2),
+    borderRadius: 5,
     paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 25,
+    justifyContent: 'left',
     alignItems: 'center',
-    backgroundColor: colors.grey(0.08),
-    marginHorizontal: 5
+    flexDirection: 'row',
   },
-  title: {
-    fontFamily: fontType['Pjs-SemiBold'],
-    fontSize: 14,
-    lineHeight: 18,
-    color: colors.bluec(),
+  teks: {
+    fontSize: 10,
+    fontFamily: fontType['Ppn-Regular'],
+    // color: 'white',
   },
-  listCategory: {
+  teks1: {
+    fontSize: 15,
+    fontFamily: fontType['Ppn-Bold'],
+    // color: 'white',
+  },
+
+  box2: {
+    width: 280,
+    height: 55,
+    marginTop: 25,
+    marginLeft: 60,
+    backgroundColor: colors.grey(0.1),
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    justifyContent: 'left',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  box3: {
+    width: 135,
+    height: 30,
+    backgroundColor: colors.white(1),
+    borderRadius: 15,
+    elevation: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  horizontalLine: {
+    marginTop : 20,
+    marginBottom : 12,
+    width: '100%', 
+    height: 1, 
+    backgroundColor: 'grey',
+  },
+
+  listCategories: {
     paddingVertical: 10,
   },
-  ListBook: {
+  listBook: {
     paddingVertical: 10,
     gap: 10,
   },
-})
 
+});
 
 const ListBook = () => {
   return (
@@ -153,144 +146,140 @@ const ListBook = () => {
       <View style={styles.ListBook}>
         <ScrollView
           showsHorizontalScrollIndicator={false}
-          horizontal
-          contentContainerStyle={{ gap: 10 }}>
-          <View style={{ ...itemHorizontal.cardItem, marginLeft: 24 }}>
-            <ImageBackground
-              style={itemHorizontal.cardImage}
-              resizeMode="cover"
-              imageStyle={{ borderRadius: 15 }}
-              source={dongeng2}>
-              <View style={itemHorizontal.cardContent}>
-                <View style={itemHorizontal.cardInfo}>
-                  <Text style={itemHorizontal.cardTitle}>
-                  The Enchanted Moon: A Tale of Wishes
-                  </Text>
-                </View>
-                <View>
-                  <View style={itemHorizontal.cardIcon}>
-                    <ReceiptSquare color={colors.white()} variant="Linear" size={20} />
-                  </View>
-                </View>
-              </View>
-            </ImageBackground>
+          horizontal 
+          contentContainerStyle={{ gap: 15 }}>
+          <View style={[itemHorizontal.card, { backgroundColor: colors.blue(1) }]}>
+            <Book1 size={20} color={colors.white(1)} />
+            <Text style={itemHorizontal.cardTitle}>The Enchanted Moon: A Tale of Wishes</Text>
+            <View style={[itemHorizontal.horizontalLine, { opacity: 0.3 }]}></View>
+            <View style={[itemHorizontal.cardContent]}>
+             <ProfileCircle size={15} color={colors.white(1)} />
+             <Text style={itemHorizontal.cardText}>Cornelia Boro</Text>
+            </View>
           </View>
-          <View style={itemHorizontal.cardItem}>
-            <ImageBackground
-              style={itemHorizontal.cardImage}
-              resizeMode="cover"
-              imageStyle={{ borderRadius: 15 }}
-              source={dongeng1}>
-              <View style={itemHorizontal.cardContent}>
-                <View style={itemHorizontal.cardInfo}>
-                  <Text style={itemHorizontal.cardTitle}>
-                  A Friendship of Otter and Tortoise
-                  </Text>
-                </View>
-                <View>
-                  <View style={itemHorizontal.cardIcon}>
-                    <ReceiptSquare color={colors.white()} variant="Linear" size={20} />
-                  </View>
-                </View>
-              </View>
-            </ImageBackground>
+          <View style={[itemHorizontal.card, { backgroundColor: colors.green(1) }]}>
+            <Book1 size={20} color={colors.white(1)} />
+            <Text style={itemHorizontal.cardTitle}>A Friendship of Otter and Tortoise</Text>
+            <View style={[itemHorizontal.horizontalLine, { opacity: 0.3 }]}></View>
+            <View style={[itemHorizontal.cardContent]}>
+             <ProfileCircle size={15} color={colors.white(1)} />
+             <Text style={itemHorizontal.cardText}>Mindaha</Text>
+            </View>
           </View>
-          <View style={itemHorizontal.cardItem}>
-            <ImageBackground
-              style={itemHorizontal.cardImage}
-              resizeMode="cover"
-              imageStyle={{ borderRadius: 15 }}
-              source={dongeng3}>
-              <View style={itemHorizontal.cardContent}>
-                <View style={itemHorizontal.cardInfo}>
-                  <Text style={itemHorizontal.cardTitle}>
-                    Baking 101: Mastering the Art of Baking
-                  </Text>
-                </View>
-                <View>
-                  <View style={itemHorizontal.cardIcon}>
-                    <ReceiptSquare color={colors.white()} variant="Linear" size={20} />
-                  </View>
-                </View>
-              </View>
-            </ImageBackground>
-          </View>
-          <View style={{ ...itemHorizontal.cardItem, marginRight: 24 }}>
-            <ImageBackground
-              style={itemHorizontal.cardImage}
-              resizeMode="cover"
-              imageStyle={{ borderRadius: 15 }}
-              source={dongeng4}>
-              <View style={itemHorizontal.cardContent}>
-                <View style={itemHorizontal.cardInfo}>
-                  <Text style={itemHorizontal.cardTitle}>
-                    Rediscovering Vinyl: The Resurgence of Analog
-                  </Text>
-                </View>
-                <View>
-                  <View style={itemHorizontal.cardIcon}>
-                    <ReceiptSquare color={colors.white()} variant="Linear" size={20} />
-                  </View>
-                </View>
-              </View>
-            </ImageBackground>
+          <View style={[itemHorizontal.card, { backgroundColor: colors.red(1) }]}>
+            <Book1 size={20} color={colors.white(1)} />
+            <Text style={itemHorizontal.cardTitle}>The Legend of the Phoenix</Text>
+            <View style={[itemHorizontal.horizontalLine, { opacity: 0.3 }]}></View>
+            <View style={[itemHorizontal.cardContent]}>
+             <ProfileCircle size={15} color={colors.white(1)} />
+             <Text style={itemHorizontal.cardText}>Arunika Senja</Text>
+            </View>
           </View>
         </ScrollView>
-  <View style={itemVertical.listCard}>
-  <View style={itemVertical.cardItem}>
-    <Image
-      style={itemVertical.cardImage}
-      source={dongeng1}
-    />
-    <View style={itemVertical.cardContent}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <View style={{ flex: 1, paddingRight: 10 }}>
-          <Text style={itemVertical.cardTitle}>A Friendship of Otter and Tortoise</Text>
-        </View>
-        <View style={{ alignItems: 'center' }}>
-          <ReceiptSquare color={colors.bluec(0.6)} variant="Linear" size={20} />
-        </View>
-    </View>
-    </View>
-  </View>
-  <View style={itemVertical.cardItem}>
-    <Image
-      style={itemVertical.cardImage}
-      source={dongeng2}
-    />
-    <View style={itemVertical.cardContent}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <View style={{ flex: 1, paddingRight: 10 }}>
-          <Text style={itemVertical.cardTitle}>A Friendship of Otter and Tortoise</Text>
-        </View>
-        <View style={{ alignItems: 'center' }}>
-          <ReceiptSquare color={colors.bluec(0.6)} variant="Linear" size={20} />
-        </View>
       </View>
-    </View>
-  </View>
-</View>
-
-      </View>
-    </ScrollView>  
+    </ScrollView>
   );
 };
 
+const ListCategories = () => {
+  return (
+    <ScrollView>
+      <View style={styles.ListCategories}>
+      <ScrollView
+          showsVerticalScrollIndicator={false}
+          vertical>
+      <View style={itemVertical.listCard}>
+          <View style={itemVertical.cardItem}>
+            <Image
+              style={itemVertical.cardImage}
+              source={dongeng1}
+
+            />
+            <View style={itemVertical.cardContent}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ flex: 1, paddingRight: 10 }}>
+                  <Text style={itemVertical.cardTitle}>Fabel</Text>
+                  <Text style={itemVertical.cardText}>128 Publications</Text>
+                </View>
+                <View style={{ alignItems: 'center' }}>
+                  <Like color={colors.blue(0.6)} variant="Linear" size={20} />
+                </View>
+              </View>
+            </View>
+          </View>
+          
+          <View style={itemVertical.cardItem}>
+            <Image
+              style={itemVertical.cardImage}
+              source={dongeng2}
+            />
+            <View style={itemVertical.cardContent}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ flex: 1, paddingRight: 10 }}>
+                  <Text style={itemVertical.cardTitle}>Mythological</Text>
+                  <Text style={itemVertical.cardText}>50 Publications</Text>
+                </View>
+                <View style={{ alignItems: 'center' }}>
+                  <Like color={colors.blue(0.6)} variant="Linear" size={20} />
+                </View>
+              </View>
+            </View>
+          </View>
+
+          <View style={itemVertical.cardItem}>
+            <Image
+              style={itemVertical.cardImage}
+              source={dongeng3}
+            />
+            <View style={itemVertical.cardContent}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ flex: 1, paddingRight: 10 }}>
+                  <Text style={itemVertical.cardTitle}>Urban Legend</Text>
+                  <Text style={itemVertical.cardText}>20 Publications</Text>
+                </View>
+                <View style={{ alignItems: 'center' }}>
+                  <Like color={colors.blue(0.6)} variant="Linear" size={20} />
+                </View>
+              </View>
+            </View>
+          </View>
+          
+          <View style={itemVertical.cardItem}>
+            <Image
+              style={itemVertical.cardImage}
+              source={dongeng4}
+            />
+            <View style={itemVertical.cardContent}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ flex: 1, paddingRight: 10 }}>
+                  <Text style={itemVertical.cardTitle}>Classic Folktales</Text>
+                  <Text style={itemVertical.cardText}>70 Publications</Text>
+                </View>
+                <View style={{ alignItems: 'center' }}>
+                  <Like color={colors.blue(0.6)} variant="Linear" size={20} />
+                </View>
+              </View>
+            </View>
+          </View>
+
+      </View>
+      </ScrollView>
+     </View>
+     </ScrollView>
+  );
+};
+
+
+
 const itemVertical = StyleSheet.create({
   listCard: {
-    paddingHorizontal: 24,
-    paddingVertical: 10,
+  marginTop:10,
     gap: 15,
   },
   cardItem: {
     backgroundColor: colors.cream,
     flexDirection: 'row',
     borderRadius: 10,
-  },
-  cardCategory: {
-    color: colors.blueb(),
-    fontSize: 10,
-    fontFamily: fontType['Ppn-SemiBold'],
   },
   cardTitle: {
     fontSize: 14,
@@ -300,49 +289,40 @@ const itemVertical = StyleSheet.create({
   cardText: {
     fontSize: 10,
     fontFamily: fontType['Ppn-Medium'],
-    color: colors.blueb(0.6),
+    color: colors.grey(0.8),
   },
   cardImage: {
-    width: 94,
-    height: 94,
+    width: 50,
+    height: 50,
     borderRadius: 10,
     resizeMode: 'cover',
   },
-  cardInfo: {
-    flexDirection: 'row',
-    gap: 5,
-    alignItems: 'center',
-  },
+
   cardContent: {
     gap: 10,
     justifyContent: 'space-between',
     paddingRight: 10,
     paddingLeft: 15,
     flex: 1,
-    paddingVertical: 10,
   },
 });
 
+
 const itemHorizontal = StyleSheet.create({
-  cardItem: {
-    width: 300,
-  },
-  cardImage: {
-    width: '100%',
-    height: 200,
-    borderRadius: 5,
+  card:{
+    width: 150,
+    height:180,
+    borderRadius: 12,
+    marginTop : 10,
+    paddingTop: 20,
+    paddingBottom: 30,
+    paddingHorizontal: 20,
+    justifyContent: 'space-between',
+    flexDirection: 'coloumn',
   },
   cardContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 15,
-  },
-  cardInfo: {
-    justifyContent: 'flex-end',
-    height: '50%',
-    gap: 10,
-    maxWidth: '60%',
-    textShadowColor: 'rgba(0, 0, 0, 0.8)',  
   },
   cardTitle: {
     fontFamily: fontType['Ppn-Bold'],
@@ -354,12 +334,10 @@ const itemHorizontal = StyleSheet.create({
     color: colors.white(),
     fontFamily: fontType['Ppn-Medium'],
   },
-  cardIcon: {
-    backgroundColor: colors.white(0.33),
-    padding: 5,
-    borderColor: colors.white(),
-    borderWidth: 0.5,
-    borderRadius: 5,
+  horizontalLine: {
+    width: '100%', 
+    height: 1, 
+    backgroundColor: 'white',
   },
 });
 
