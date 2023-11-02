@@ -1,8 +1,10 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
-import { Book, ReceiptSquare, SearchNormal1, Like, Document, Notification, ProfileCircle, Book1 } from 'iconsax-react-native';
+import React, {useState} from 'react';
+import { ScrollView, StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native';
+import { Book, ReceiptSquare, SearchNormal1, Like, Document, Notification, ProfileCircle, Book1, Receipt21 } from 'iconsax-react-native';
 import { fontType, colors } from './src/theme';
 import { dongeng1, dongeng2, dongeng3, dongeng4 } from './src/assets/images';
+import { ListHorizontal} from './src/components';
+import { CategoryList } from './data';
 
 
 export default function App() {
@@ -34,17 +36,104 @@ export default function App() {
           <Text style={[styles.title, { color: colors.black(1) }]}>Recent Readings!</Text>
           <Text style={[styles.title, { color: colors.blue(1) }]}>View All</Text>
         </View>
-        <ListBook />
+        <FlatListCategory />
         <View style={[styles.horizontalLine, { opacity: 0.2 }]}></View>
         <View style={styles.itemAndIconContainer}>
           <Text style={[styles.title, { color: colors.black(1) }]}>Categories</Text>
           <Text style={[styles.title, { color: colors.blue(1) }]}>Sort by: Popularity</Text>
+        </View>
+        <View style={styles.listCategory}>
         </View>
         <ListCategories />
       </View>
     </View>
   );
 }
+
+const ItemCategory = ({item, onPress, color}) => {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <View style={{...category.item,  backgroundColor: item.bg}}>
+      <View>
+              <TouchableOpacity onPress={onPress}>
+                {/* <Like color={colors.white()} variant={variant} size={20} /> */}
+              </TouchableOpacity>
+            </View>
+        <Text style={{...category.title, color}}>{item.title}</Text>
+        <Text style={{...category.text, color}}>{item.writer}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const FlatListCategory = () => {
+  const [selected, setSelected] = useState(1);
+  const renderItem = ({item}) => {
+    const color = item.id === selected ? colors.white() : colors.white(0.6);
+    return (
+      <ItemCategory
+        item={item}
+        onPress={() => setSelected(item.id)}
+        color={color}
+      />
+    );
+  };
+  return (
+    <FlatList
+      data={CategoryList}
+      keyExtractor={item => item.id}
+      renderItem={item => renderItem({...item})}
+      ItemSeparatorComponent={() => <View style={{width: 10}} />}
+      contentContainerStyle={{paddingHorizontal: 3}}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+    />
+  );
+};
+
+const category = StyleSheet.create({
+  item: {
+    width: 150,
+    height:180,
+    borderRadius: 12,
+    marginTop : 10,
+    paddingTop: 20,
+    paddingBottom: 30,
+    paddingHorizontal: 10,
+    justifyContent: 'space-between',
+    flexDirection: 'coloumn',
+  },
+  title: {
+    fontFamily: fontType['Ppn-SemiBold'],
+    fontSize: 14,
+    lineHeight: 18,
+    color : colors.white(1),
+  },
+});
+
+
+const ListBook = () => {
+  const horizontalData = CategoryList.slice(0, 5);
+  const verticalData = CategoryList.slice(5);
+  return (
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={styles.listBook}>
+        <ListHorizontal data={horizontalData} />
+        <View style={styles.card}>
+          {verticalData.map((item, index) => (
+            <ItemSmall item={item} key={index} />
+          ))}
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+
+
+
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -140,132 +229,105 @@ const styles = StyleSheet.create({
 
 });
 
-const ListBook = () => {
+const ListCategories = () => {
   return (
     <ScrollView>
-      <View style={styles.ListBook}>
-        <ScrollView
-          showsHorizontalScrollIndicator={false}
-          horizontal 
-          contentContainerStyle={{ gap: 15 }}>
-          <View style={[itemHorizontal.card, { backgroundColor: colors.blue(1) }]}>
-            <Book1 size={20} color={colors.white(1)} />
-            <Text style={itemHorizontal.cardTitle}>The Enchanted Moon: A Tale of Wishes</Text>
-            <View style={[itemHorizontal.horizontalLine, { opacity: 0.3 }]}></View>
-            <View style={[itemHorizontal.cardContent]}>
-             <ProfileCircle size={15} color={colors.white(1)} />
-             <Text style={itemHorizontal.cardText}>Cornelia Boro</Text>
+      <View style={styles.ListCategories}>
+        <ScrollView vertical={true} showsHorizontalScrollIndicator={true}>
+        <View style={itemVertical.listCard}>
+            <View style={itemVertical.cardItem}>
+                <Image
+                  style={itemVertical.cardImage}
+                  source={dongeng1}
+                />
+                <View style={itemVertical.cardContent}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ flex: 1, paddingRight: 10 }}>
+                      <Text style={itemVertical.cardTitle}>Fabel</Text>
+                      <Text style={itemVertical.cardText}>128 Publications</Text>
+                    </View>
+                    <View style={{ alignItems: 'center' }}>
+                      <Like color={colors.blue(0.6)} variant="Linear" size={20} />
+                    </View>
+                  </View>
+                </View>
             </View>
-          </View>
-          <View style={[itemHorizontal.card, { backgroundColor: colors.green(1) }]}>
-            <Book1 size={20} color={colors.white(1)} />
-            <Text style={itemHorizontal.cardTitle}>A Friendship of Otter and Tortoise</Text>
-            <View style={[itemHorizontal.horizontalLine, { opacity: 0.3 }]}></View>
-            <View style={[itemHorizontal.cardContent]}>
-             <ProfileCircle size={15} color={colors.white(1)} />
-             <Text style={itemHorizontal.cardText}>Mindaha</Text>
+              
+            <View style={itemVertical.cardItem}>  
+                <Image
+                  style={itemVertical.cardImage}
+                  source={dongeng2}
+                />
+                <View style={itemVertical.cardContent}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ flex: 1, paddingRight: 10 }}>
+                      <Text style={itemVertical.cardTitle}>Mythological</Text>
+                      <Text style={itemVertical.cardText}>70 Publications</Text>
+                    </View>
+                    <View style={{ alignItems: 'center' }}>
+                      <Like color={colors.blue(0.6)} variant="Linear" size={20} />
+                    </View>
+                  </View>
+                </View>
             </View>
-          </View>
-          <View style={[itemHorizontal.card, { backgroundColor: colors.red(1) }]}>
-            <Book1 size={20} color={colors.white(1)} />
-            <Text style={itemHorizontal.cardTitle}>The Legend of the Phoenix</Text>
-            <View style={[itemHorizontal.horizontalLine, { opacity: 0.3 }]}></View>
-            <View style={[itemHorizontal.cardContent]}>
-             <ProfileCircle size={15} color={colors.white(1)} />
-             <Text style={itemHorizontal.cardText}>Arunika Senja</Text>
+
+            <View style={itemVertical.cardItem}>
+                <Image
+                  style={itemVertical.cardImage}
+                  source={dongeng3}
+                />
+                <View style={itemVertical.cardContent}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ flex: 1, paddingRight: 10 }}>
+                      <Text style={itemVertical.cardTitle}>Urban Legend</Text>
+                      <Text style={itemVertical.cardText}>30 Publications</Text>
+                    </View>
+                    <View style={{ alignItems: 'center' }}>
+                      <Like color={colors.blue(0.6)} variant="Linear" size={20} />
+                    </View>
+                  </View>
+                </View>
+            </View>
+              
+            <View style={itemVertical.cardItem}>
+                <Image
+                  style={itemVertical.cardImage}
+                  source={dongeng4}
+                />
+                <View style={itemVertical.cardContent}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ flex: 1, paddingRight: 10 }}>
+                      <Text style={itemVertical.cardTitle}>Classic Folktales</Text>
+                      <Text style={itemVertical.cardText}>20 Publications</Text>
+                    </View>
+                    <View style={{ alignItems: 'center' }}>
+                      <Like color={colors.blue(0.6)} variant="Linear" size={20} />
+                    </View>
+                  </View>
+                </View>
+            </View>
+
+            <View style={itemVertical.cardItem}>
+                <Image
+                  style={itemVertical.cardImage}
+                  source={dongeng4}
+                />
+                <View style={itemVertical.cardContent}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ flex: 1, paddingRight: 10 }}>
+                      <Text style={itemVertical.cardTitle}>Classic Folktales</Text>
+                      <Text style={itemVertical.cardText}>20 Publications</Text>
+                    </View>
+                    <View style={{ alignItems: 'center' }}>
+                      <Like color={colors.blue(0.6)} variant="Linear" size={20} />
+                    </View>
+                  </View>
+                </View>
             </View>
           </View>
         </ScrollView>
       </View>
     </ScrollView>
-  );
-};
-
-const ListCategories = () => {
-  return (
-    <ScrollView>
-      <View style={styles.ListCategories}>
-      <ScrollView
-          showsVerticalScrollIndicator={false}
-          vertical>
-      <View style={itemVertical.listCard}>
-          <View style={itemVertical.cardItem}>
-            <Image
-              style={itemVertical.cardImage}
-              source={dongeng1}
-
-            />
-            <View style={itemVertical.cardContent}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flex: 1, paddingRight: 10 }}>
-                  <Text style={itemVertical.cardTitle}>Fabel</Text>
-                  <Text style={itemVertical.cardText}>128 Publications</Text>
-                </View>
-                <View style={{ alignItems: 'center' }}>
-                  <Like color={colors.blue(0.6)} variant="Linear" size={20} />
-                </View>
-              </View>
-            </View>
-          </View>
-          
-          <View style={itemVertical.cardItem}>
-            <Image
-              style={itemVertical.cardImage}
-              source={dongeng2}
-            />
-            <View style={itemVertical.cardContent}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flex: 1, paddingRight: 10 }}>
-                  <Text style={itemVertical.cardTitle}>Mythological</Text>
-                  <Text style={itemVertical.cardText}>50 Publications</Text>
-                </View>
-                <View style={{ alignItems: 'center' }}>
-                  <Like color={colors.blue(0.6)} variant="Linear" size={20} />
-                </View>
-              </View>
-            </View>
-          </View>
-
-          <View style={itemVertical.cardItem}>
-            <Image
-              style={itemVertical.cardImage}
-              source={dongeng3}
-            />
-            <View style={itemVertical.cardContent}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flex: 1, paddingRight: 10 }}>
-                  <Text style={itemVertical.cardTitle}>Urban Legend</Text>
-                  <Text style={itemVertical.cardText}>20 Publications</Text>
-                </View>
-                <View style={{ alignItems: 'center' }}>
-                  <Like color={colors.blue(0.6)} variant="Linear" size={20} />
-                </View>
-              </View>
-            </View>
-          </View>
-          
-          <View style={itemVertical.cardItem}>
-            <Image
-              style={itemVertical.cardImage}
-              source={dongeng4}
-            />
-            <View style={itemVertical.cardContent}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flex: 1, paddingRight: 10 }}>
-                  <Text style={itemVertical.cardTitle}>Classic Folktales</Text>
-                  <Text style={itemVertical.cardText}>70 Publications</Text>
-                </View>
-                <View style={{ alignItems: 'center' }}>
-                  <Like color={colors.blue(0.6)} variant="Linear" size={20} />
-                </View>
-              </View>
-            </View>
-          </View>
-
-      </View>
-      </ScrollView>
-     </View>
-     </ScrollView>
   );
 };
 
@@ -340,4 +402,49 @@ const itemHorizontal = StyleSheet.create({
     backgroundColor: 'white',
   },
 });
+
+
+
+
+// const ListBook = () => {
+//   return (
+//     <ScrollView>
+//       <View style={styles.ListBook}>
+//         <ScrollView
+//           showsHorizontalScrollIndicator={false}
+//           horizontal 
+//           contentContainerStyle={{ gap: 15 }}>
+//           <View style={[itemHorizontal.card, { backgroundColor: colors.blue(1) }]}>
+//             <Book1 size={20} color={colors.white(1)} />
+//             <Text style={itemHorizontal.cardTitle}>The Enchanted Moon: A Tale of Wishes</Text>
+//             <View style={[itemHorizontal.horizontalLine, { opacity: 0.3 }]}></View>
+//             <View style={[itemHorizontal.cardContent]}>
+//              <ProfileCircle size={15} color={colors.white(1)} />
+//              <Text style={itemHorizontal.cardText}>Cornelia Boro</Text>
+//             </View>
+//           </View>
+//           <View style={[itemHorizontal.card, { backgroundColor: colors.green(1) }]}>
+//             <Book1 size={20} color={colors.white(1)} />
+//             <Text style={itemHorizontal.cardTitle}>A Friendship of Otter and Tortoise</Text>
+//             <View style={[itemHorizontal.horizontalLine, { opacity: 0.3 }]}></View>
+//             <View style={[itemHorizontal.cardContent]}>
+//              <ProfileCircle size={15} color={colors.white(1)} />
+//              <Text style={itemHorizontal.cardText}>Mindaha</Text>
+//             </View>
+//           </View>
+//           <View style={[itemHorizontal.card, { backgroundColor: colors.red(1) }]}>
+//             <Book1 size={20} color={colors.white(1)} />
+//             <Text style={itemHorizontal.cardTitle}>The Legend of the Phoenix</Text>
+//             <View style={[itemHorizontal.horizontalLine, { opacity: 0.3 }]}></View>
+//             <View style={[itemHorizontal.cardContent]}>
+//              <ProfileCircle size={15} color={colors.white(1)} />
+//              <Text style={itemHorizontal.cardText}>Arunika Senja</Text>
+//             </View>
+//           </View>
+//         </ScrollView>
+//       </View>
+//     </ScrollView>
+//   );
+// };
+
 
