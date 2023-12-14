@@ -1,2 +1,3 @@
 import ListHorizontal from './ListHorizontal'
-export {ListHorizontal}
+import ListCategories from './ListCategories'
+export {ListHorizontal, ListCategories}

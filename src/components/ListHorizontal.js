@@ -9,7 +9,7 @@ const ItemHorizontal = ({item, variant, onPress}) => {
   return (
     <View style={itemHorizontal.card}>
         <View style={itemHorizontal.cardContent}>
-            <View style={[itemHorizontal.card , { backgroundColor: colors.blue(1) }]}>
+            <View style={[itemHorizontal.card , {backgroundColor:item.bg }]}>
             <View>
               <TouchableOpacity onPress={onPress}>
                 <Like color={colors.red()} variant={variant} size={20} />
@@ -55,14 +55,14 @@ const ListHorizontal = ({data}) => {
   );
 };
 export default ListHorizontal;
+
 const itemHorizontal = StyleSheet.create({
   card:{
     width: 150,
-    height:180,
-    borderRadius: 12,
-    marginTop : 10,
+    height:200,
+    borderRadius: 20,
     paddingTop: 20,
-    paddingBottom: 30,
+    paddingBottom: 50,
     paddingHorizontal: 20,
     justifyContent: 'space-between',
     flexDirection: 'coloumn',
